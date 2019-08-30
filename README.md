@@ -16,3 +16,4 @@
 [ ] 調整資料夾結構
 [ ] 測試 User Request: POST /users/register 增加更多條件
 [ ] 測試 User Request: POST /users/login
+[ ] 測試 Todo Request: GET /todos/new 登入狀態 & 非登入狀態
