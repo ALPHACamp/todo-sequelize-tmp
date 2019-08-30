@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const db = require('./models')
 
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -29,12 +30,12 @@ app.use((req, res, next) => {
   next()
 })
 
-// 設定路由
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
+// 使用路由器
+app.use('/', require('./routes/home'))
 app.use('/users', require('./routes/user'))
+app.use('/todos', require('./routes/todo'))
 
+// 設定 express port 3000 與資料庫同步
 app.listen(port, () => {
   console.log(`App is running on port ${port}!`)
 })
