@@ -18,7 +18,17 @@ describe('# signup', function() {
 })
 
 describe('# signup', function() {
-    it("should create user", (done) => {
+    before(async function() {
+      // 在所有測試開始前會執行的程式碼區塊
+      await db.User.destroy({where: {},truncate: true})
+    });
+
+    after(async function() {
+      // 在所有測試結束後會執行的程式碼區塊
+      await db.User.destroy({where: {},truncate: true})
+    });
+
+    it("[O] 註冊帳號成功", (done) => {
         request(app)
           .post('/users/register')
           .send('name=name&email=email&password=password&password2=password')
@@ -29,6 +39,42 @@ describe('# signup', function() {
               }
             }).then((user) => {  
               expect(user.email).to.be.equal('email')
+              done()
+            })
+        });
+    });
+
+    it("[X] 所有欄位都是必填", (done) => {
+        request(app)
+          .post('/users/register')
+          .send()
+          .end(function(err, res) {
+            db.User.findOne({
+              where: {
+                email: 'email'
+              }
+            }).then((user) => {
+
+              // 條件：檢查錯誤訊息
+              expect(res.text).to.contain('所有欄位都是必填')
+              done()
+            })
+        });
+    });
+
+    it("[X] 密碼輸入錯誤", (done) => {
+        request(app)
+          .post('/users/register')
+          .send('name=name&email=email&password=password&password2=password2')
+          .end(function(err, res) {
+            db.User.findOne({
+              where: {
+                email: 'email'
+              }
+            }).then((user) => {
+
+              // 條件：檢查錯誤訊息
+              expect(res.text).to.contain('密碼輸入錯誤')
               done()
             })
         });
