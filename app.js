@@ -2,6 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -46,6 +50,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/users', require('./routes/user'))
 app.use('/todos', require('./routes/todo'))
+app.use('/auth', require('./routes/auths'))
 
 // 設定 express port 3000 與資料庫同步
 app.listen(port, () => {
