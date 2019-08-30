@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const db = require('./models')
 
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -15,6 +14,7 @@ app.use(methodOverride('_method'))
 
 const session = require('express-session')
 const passport = require('passport')
+const flash = require('connect-flash')
 
 app.use(session({
   secret: 'your secret key',
@@ -22,11 +22,23 @@ app.use(session({
   saveUninitialized: 'false'
 }))
 
+require('./config/passport')(passport)
+
 app.use(passport.initialize())
 app.use(passport.session())
 require('./config/passport')(passport)
 app.use((req, res, next) => {
   res.locals.user = req.user
+  next()
+})
+
+app.use(flash())
+
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
