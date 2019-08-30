@@ -56,3 +56,5 @@ app.use('/auth', require('./routes/auths'))
 app.listen(port, () => {
   console.log(`App is running on port ${port}!`)
 })
+
+module.exports = app
