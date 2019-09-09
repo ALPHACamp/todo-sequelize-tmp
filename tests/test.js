@@ -93,3 +93,20 @@ describe('# signup', function() {
     });
 })
 
+describe('# signup', function() {
+    it("should create user", (done) => {
+        request(app)
+          .post('/users/register')
+          .send('name=name&email=email&password=password&password2=password')
+          .end(function(err, res) {
+            db.User.findOne({
+              where: {
+                email: 'email'
+              }
+            }).then((user) => {  
+              expect(user.email).to.be.equal('email')
+              done()
+            })
+        });
+    });
+})
