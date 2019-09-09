@@ -3,3 +3,4 @@
 [ ] 準備環境：npm install mocha --save-dev
 [ ] Array - #indexOf() - should return -1 when the value is not present
 [ ] 比較斷言庫的不同
+[ ] 了解每一個測試案例的生命週期
