@@ -8,3 +8,4 @@
 ### 示範一個 CRUD 的測試該如何進行
 
 [ ] 測試 User Model 的 CRUD action
+[ ] 測試 User Request: GET /users/register

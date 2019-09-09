@@ -2,6 +2,7 @@ const assert = require('assert')
 const chai = require('chai')
 const should = chai.should()
 const { expect } = require('chai')
+const request = require('supertest')
 
 const app = require('../app')
 const db = require('../models')
@@ -79,3 +80,16 @@ describe('# User Model', () => {
       })
   })
 }) 
+
+describe('# signup', function() {
+    it("GET /users/register", (done) => {
+        request(app)
+          .get('/users/register')
+          .end(function(err, res) {
+            expect(res.statusCode).to.be.equal(200) 
+            expect(res.text).to.contain('Register') 
+            done()
+        });
+    });
+})
+
