@@ -15,6 +15,8 @@ router.get('/', authenticated, (req, res) => {
       if (!user) throw new Error('user not found')
 
       return Todo.findAll({
+        raw: true,
+        nest: true,
         where: { UserId: req.user.id }
       })
     })

@@ -43,7 +43,7 @@ router.get('/:id', authenticated, (req, res) => {
         }
       })
     })
-    .then((todo) => { return res.render('detail', { todo: todo }) })
+    .then((todo) => { return res.render('detail', { todo: todo.get() }) })
     .catch((error) => { return res.status(422).json(error) })
 })
 
@@ -64,7 +64,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
         }
       })
     })
-    .then((todo) => { return res.render('edit', { todo: todo }) })
+    .then((todo) => { return res.render('edit', { todo: todo.get() }) })
 })
 
 // 修改 Todo
